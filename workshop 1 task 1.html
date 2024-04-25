@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <a-sky color="#87CEEB"></a-sky> 
+    <!-- Tunnel halves -->
+    <!-- Smallest circle -->
+    <a-torus id="green-torus" position="0 0.8 -2.5" radius="3" radius-tubular="0.1" arc="180" color="#008000"></a-torus>
+    <!-- 2nd circle -->
+    <a-torus id="yellow-torus" position="0 0.8 -3" radius="3" radius-tubular="0.2" arc="180" color="#eda62b"></a-torus>
+    <!-- 3rd circle -->
+    <a-torus id="blue-torus" position="0 0.5 -5" radius="4" radius-tubular="0.3" arc="180" color="#0000FF"></a-torus>
+    <!-- Largest circle -->
+    <a-torus id="purple-torus" position="0 0.09 -7" radius="5" radius-tubular="0.4" arc="180" color="#801f91"></a-torus>
+
+    <!-- Ground plane -->
+    <a-plane rotation="-90 0 0" width="90" height="80" position="0 -10 -20" color="#bad3e3"></a-plane>
+       <!-- Left Stick -->
+       <a-entity position="-1.5 0.5 -8">
+        <a-cylinder color="#fa6be7" height="4" radius="0.2"></a-cylinder> <!-- Brown colored stick -->
+      </a-entity>
+      
+      <!-- Right Stick -->
+      <a-entity position="1.5 0.5 -8">
+        <a-cylinder color="#fa6be7" height="4" radius="0.2"></a-cylinder> <!-- Brown colored stick -->
+      </a-entity>
+  
+      <!-- Signboard -->
+      <a-entity position="0 1.8 -7.6">
+        <a-plane color="#f2eec4" width="2.6" height="1"></a-plane> <!-- White signboard -->
+        <a-text value="Snehal" color="#000" align="center" scale="1.8 1.8 1.8"></a-text> <!-- Black text -->
+      </a-entity>
+
+    <a-entity id="camera" camera look-controls position="0 1.6 0"></a-entity>
+
+    <script>
+      // Get the camera entity
+      var camera = document.querySelector('#camera');
+      
+      // Listen for camera movement
+      camera.addEventListener('componentchanged', function (evt) {
+        // Check if the camera's position along the z-axis changes
+        if (evt.detail.name === 'position' && evt.detail.newData[2] !== evt.detail.oldData[2]) {
+          var zPosition = camera.object3D.position.z;
+          // Adjust torus colors based on camera's z-position
+          if (zPosition > -1.5 && zPosition <= -0.5) {
+            document.getElementById('green-torus').setAttribute('color', '#00FF00'); // Green
+          } else if (zPosition > -3.5 && zPosition <= -2.5) {
+            document.getElementById('yellow-torus').setAttribute('color', '#FFFF00'); // Yellow
+          } else if (zPosition > -5.5 && zPosition <= -4.5) {
+            document.getElementById('blue-torus').setAttribute('color', '#0000FF'); // Blue
+          } else if (zPosition > -8.5 && zPosition <= -7.5) {
+            document.getElementById('purple-torus').setAttribute('color', '#800080'); // Purple
+          }
+        }
+      });
+    </script>
+  </a-scene>
+</body>
+</html>

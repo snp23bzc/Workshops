@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+</head>
+<body>
+  <a-scene>
+    <a-sky color="#87CEEB"></a-sky> 
+    <!-- Tunnel halves -->
+    <!-- Smallest circle -->
+    <a-scene>
+        <a-assets>
+            <a-asset-item id="baseball_cap" src="C:\Users\Lenovo\OneDrive\Documents\Snehal\Snehal\baseball_cap\scene.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity gltf-model="#cap"></a-entity>
+
+    <a-entity id="camera" camera look-controls position="0 1.6 0"></a-entity>
+
+    <script>
+      // Get the camera entity
+      var camera = document.querySelector('#camera');
+      
+      // Listen for camera movement
+      camera.addEventListener('componentchanged', function (evt) {
+        // Check if the camera's position along the z-axis changes
+        if (evt.detail.name === 'position' && evt.detail.newData[2] !== evt.detail.oldData[2]) {
+          var zPosition = camera.object3D.position.z;
+          // Adjust torus colors based on camera's z-position
+          if (zPosition > -1.5 && zPosition <= -0.5) {
+            document.getElementById('green-torus').setAttribute('color', '#00FF00'); // Green
+          } else if (zPosition > -3.5 && zPosition <= -2.5) {
+            document.getElementById('yellow-torus').setAttribute('color', '#FFFF00'); // Yellow
+          } else if (zPosition > -5.5 && zPosition <= -4.5) {
+            document.getElementById('blue-torus').setAttribute('color', '#0000FF'); // Blue
+          } else if (zPosition > -8.5 && zPosition <= -7.5) {
+            document.getElementById('purple-torus').setAttribute('color', '#800080'); // Purple
+          }
+        }
+      });
+    </script>
+  </a-scene>
+</body>
+</html>
